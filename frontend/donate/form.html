@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect With Us</title>
+    <link rel="stylesheet" href="form.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>Connect With Us</h1>
+        <p>Kindly fill this form, our team will collect your <strong>Donation</strong> from your place.</p>
+
+        <form id="donationform">
+            <div class="form-group">
+                <input type="text" id="name" name="name" placeholder="Your Name" value="" required>
+                <input type="text" id="address" name="address" placeholder="Address" value="" required>
+            </div>
+            <div class="form-group">
+                <input type="text" id="mobile" name="number" placeholder="Mobile No." value="" required>
+            </div>
+            <div class="form-group">
+                <label><input type="checkbox" id="food" name="donation" value="food" onclick="onlyOne(this)">
+                    Food</label>
+                <label><input type="checkbox" id="clothes" name="donation" value="clothes" onclick="onlyOne(this)">
+                    Clothes</label>
+                <label><input type="checkbox" id="money" name="donation" value="money" onclick="onlyOne(this)">
+                    Money</label>
+            </div>
+            <div class="form-group">
+                <textarea id="message" name="message" placeholder="Message" rows="4" value=""></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit">Submit Details</button>
+            </div>
+        </form>
+
+    </div>
+
+
+
+
+    <script>
+        // function closeTab() {
+        //     alert("Form submitted successfully! Thank You for Your Contribution");
+        //     window.close();
+        // }
+        function onlyOne(checkbox) {
+            const checkboxes = document.getElementsByName('donation');
+            checkboxes.forEach((item) => {
+                if (item !== checkbox) item.checked = false;
+            });
+        }
+
+        const form = document.querySelector("#donationform");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const data = new FormData(e.target);
+
+            const entries = Object.fromEntries(data.entries());
+            console.log("donation data >>", entries);
+
+
+            try {
+                const res = await fetch("http://localhost:8000/api/donate", {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json"
+                    },
+                    body: JSON.stringify(entries)
+                });
+
+                const result = await res.json();
+
+                if (result?.error) {
+                    alert(result?.message);
+                } else {
+                    alert(result?.message);
+                    window.location.href = '/frontend/';
+                }
+            } catch (err) {
+                alert(err?.message);
+            }
+        })
+
+    </script>
+</body>
+
+</html>

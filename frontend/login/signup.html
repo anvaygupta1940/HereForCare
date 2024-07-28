@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signup</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+    <div class="outer-box">
+
+        <div class="inner-box">
+
+            <header class="signup-header">
+                <h1>Signup</h1>
+                <p>It just take 10 seconds</p>
+            </header>
+
+
+            <main class="signup-body">
+
+                <form id="signupform">
+
+                    <p>
+                        <label for="fullname">Full name</label>
+                        <input type="text" name="username" id="fullname" placeholder="Arun" value="" required>
+
+                    </p>
+                    <p>
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" placeholder="xyz@gmail.com" value="" required>
+
+                    </p>
+                    <p>
+                        <label for="password">Passowrd</label>
+                        <input type="password" name="password" id="password" placeholder="at least 6 character" value=""
+                            required>
+
+                    </p>
+
+
+                    <button type="submit"
+                        style="width: 100%; padding: 12px; border-radius: 12px; outline: none; border: none; cursor: pointer; font-weight: bold; font-size: 15px; margin-top: 10px;">Create
+                        Account</button>
+
+
+
+                </form>
+            </main>
+            <footer class="signup-footer">
+                <p>already have an account? <a href="login.html" target="_self">Login</a></p>
+
+            </footer>
+
+
+
+
+        </div>
+        <div class="circle  c1"></div>
+        <div class="circle c2"></div>
+    </div>
+
+
+    <script>
+
+        const form = document.querySelector("#signupform");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const data = new FormData(e.target);
+
+            const entries = Object.fromEntries(data.entries());
+            console.log(entries);
+
+
+            try {
+                const res = await fetch("http://localhost:8000/api/auth/signup", {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json"
+                    },
+                    body: JSON.stringify(entries)
+                });
+
+                const result = await res.json();
+
+                if (result?.error) {
+                    alert(result?.message);
+                } else {
+                    alert(result?.message);
+                    window.location.href = 'login.html';
+                }
+            } catch (err) {
+                alert(err?.message);
+            }
+        })
+
+    </script>
+</body>
+
+</html>

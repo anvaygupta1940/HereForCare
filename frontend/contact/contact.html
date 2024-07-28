@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact Form</title>
+    <link rel="stylesheet" type="text/css" href="contact.css">
+     <script>
+        function closeTab() {
+            alert("Form submitted successfully!");
+            window.close();
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Contact Us</h2>
+        
+        <form action="mailto:102824arun@gmail.com" method="post" enctype="text/plain" onsubmit="closeTab(); return false;">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="reason">Message:</label>
+            <textarea id="reason" name="reason" required></textarea>
+
+            <input type="submit" value="Submit">
+        </form>
+        <div class="urgent">
+            If urgent then contact us through +91-9817245869
+        </div>
+    </div>
+</body>
+</html>

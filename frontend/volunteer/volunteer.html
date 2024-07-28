@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer Registration - Here and Care</title>
+    <link rel="stylesheet" href="volunteer.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>Join Us as a Volunteer</h1>
+        <p>We appreciate your interest in joining Here and Care. Please fill out the form below to become a part of our
+            volunteer team.</p>
+
+
+        <form id="volunteerForm">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Your Full Name" value="" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Your Email Address" value="" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="text" id="phone" name="number" placeholder="Your Phone Number" value="" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" id="address" name="address" placeholder="Your Address" value="" required>
+            </div>
+            <div class="form-group">
+                <label for="availability">Availability</label>
+                <input type="text" id="availability" name="availability" placeholder="Days and Times You Are Available"
+                    value="" required>
+            </div>
+            <div class="form-group">
+                <label for="skills">Skills and Interests</label>
+                <textarea id="skills" name="skillsAndInterests" placeholder="Describe your skills and interests"
+                    value="" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit">Submit Registration</button>
+            </div>
+        </form>
+    </div>
+
+
+
+
+    <script>
+        // function closeTab() {
+        //     alert("Form submitted successfully! Thank You for Your Contribution");
+        //     window.close();
+        // }
+
+
+        const form = document.querySelector("#volunteerForm");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const data = new FormData(e.target);
+
+            const entries = Object.fromEntries(data.entries());
+            console.log("volunteer data >>", entries);
+
+
+            try {
+                const res = await fetch("http://localhost:8000/api/volunteer", {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json"
+                    },
+                    body: JSON.stringify(entries)
+                });
+
+                const result = await res.json();
+
+                if (result?.error) {
+                    alert(result?.message);
+                } else {
+                    alert(result?.message);
+                    window.location.href = '/frontend/';
+                }
+            } catch (err) {
+                alert(err?.message);
+            }
+
+
+        })
+
+
+
+    </script>
+</body>
+
+</html>
